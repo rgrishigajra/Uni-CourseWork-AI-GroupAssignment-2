@@ -25,7 +25,7 @@ import human_IJK
 
 from logic_IJK import Game_IJK, initialGame
 
-def IJK(player1, player2, deterministic, timeout=6000, max_moves=1000):
+def IJK(player1, player2, deterministic, timeout=120000, max_moves=1000):
     game = initialGame(4, '+', deterministic)
 
     game.printGame()
