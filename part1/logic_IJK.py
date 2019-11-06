@@ -4,6 +4,8 @@
 This file implements the IJK board and rules. 
 Please do not modify anything in this file.
 
+THIS IS VERSION v2.0, updated 11/1/2019.
+
 @author: Abhilash Kuhikar, October 2019
 """
 
@@ -33,9 +35,10 @@ game.getDeterministic()->bool:
 
 game.state()->string:
     Returns 
-        '+' : uppercase has won
-        '-' : lowercase has won
-        '' : Game is still on
+        C : uppercase  has won with highest tile C
+        c : lowercase  has won with highest tile c
+        'Tie' : game is over with a tie
+        0 : game is still on
 '''
 
 import random
@@ -49,7 +52,7 @@ class GameFullException(Exception):
 
 '''Gives an object of Game_IJK with initial empty game and first player as uppercase
 '''
-def initialGame(size = 4, player = '+', deterministic = True):
+def initialGame(size = 6, player = '+', deterministic = True):
     game = [[' ' for _ in range(size)]for _ in range(size)]
     game[0][0] = 'A' if player == '+' else 'a'
     return Game_IJK(game, player, deterministic)
@@ -65,18 +68,28 @@ class Game_IJK:
     def __switch(self):
         self.__current_player = -self.__current_player
     
+    def isGameFull(self):
+        for i in range(len(self.__game)):
+            for j in range(len(self.__game[0])):
+                if self.__game[i][j] == ' ':
+                    return False
+        return True
+    
     def __game_state(self,mat):
-        zeros = 0
+        highest = {'+': 'A', '-': 'a'}
+        
         for i in range(len(mat)):
             for j in range(len(mat[0])):
-                if mat[i][j] == 'K':
-                    return '+'
-                if mat[i][j] == 'k':
-                    return '-'
-                if mat[i][j] == '':
-                    zeros += 1
-#        if zeros == 0 and self.__previous_game == self.__game:
-#            raise GameFullException
+                if (mat[i][j]).isupper():
+                    highest['+'] = chr(max(ord(mat[i][j]), ord(highest['+'])))
+                if (mat[i][j]).islower():
+                    highest['-'] = chr(max(ord(mat[i][j]), ord(highest['-'])))
+        
+        if highest['+'] == 'K' or highest['-'] == 'k' or self.isGameFull():
+            if highest['+'].lower() != highest['-']:
+                return highest['+'] if highest['+'].lower()>highest['-'] else highest['-']
+            return 'Tie'
+
         return 0
 
     def __reverse(self,mat):
@@ -96,11 +109,12 @@ class Game_IJK:
         return new
     
     def __cover_up(self,mat):
-        new = [[' ',' ',' ',' '],[' ',' ',' ',' '],[' ',' ',' ',' '],[' ',' ',' ',' ']]
+        new = [[' ' for _ in range(len(self.__game))]for _ in range(len(self.__game))]
+
         done = False
-        for i in range(4):
+        for i in range(len(self.__game)):
             count = 0
-            for j in range(4):
+            for j in range(len(self.__game)):
                 if mat[i][j] != ' ':
                     new[i][count] = mat[i][j]
                     if j != count:
@@ -112,8 +126,8 @@ class Game_IJK:
         global current_player
 
         done = False
-        for i in range(4):
-            for j in range(3):
+        for i in range(len(self.__game)):
+            for j in range(len(self.__game)-1):
                 if mat[i][j] == mat[i][j+1] and mat[i][j] != ' ':
                     mat[i][j] = chr(ord(mat[i][j])+ 1)
                     mat[i][j+1] = ' '
@@ -185,38 +199,39 @@ class Game_IJK:
     Expose this method to client to print the current state of the board
     '''
     def printGame(self):
-        str_game = [['______' for _ in range(4)] for _ in range(4)]
+        str_game = [['______' for _ in range(len(self.__game))] for _ in range(len(self.__game))]
         
-        for i in range(4):
-            for j in range(4):
+        for i in range(len(self.__game)):
+            for j in range(len(self.__game)):
                 str_game[i][j] = "_"+self.__game[i][j]+"_"
         
-        for i in range(4):
+        for i in range(len(self.__game)):
             print("|".join(str_game[i]))
         print("\n")
 
     def __add_piece(self):
         if self.__deterministic:
-            for i in range(4):
-                for j in range(4):
+            for i in range(len(self.__game)):
+                for j in range(len(self.__game)):
                     if self.__game[i][j] == ' ':
                         self.__game[i][j] = 'A' if self.__current_player>0 else 'a'
                         self.__new_piece_loc = (i,j)
                         return
         else:
             open=[]
-            for i in range(4):
-                for j in range(4):
+            for i in range(len(self.__game)):
+                for j in range(len(self.__game)):
                     if self.__game[i][j] == ' ':
                         open += [(i,j),]
 
             if len(open) > 0:
                 r = random.choice(open)
                 self.__game[r[0]][r[1]] = 'A' if self.__current_player>0 else 'a'
+                self.__new_piece_loc = r
 
                 
     def makeMove(self,move):
-        if move not in ['U','L','D','R','S']:
+        if move not in ['U','L','D','R']:
             raise InvalidMoveException
 
         self.__previous_game = self.__game
@@ -258,3 +273,4 @@ class Game_IJK:
     def state(self):
         return self.__game_state(self.__game)
     
+

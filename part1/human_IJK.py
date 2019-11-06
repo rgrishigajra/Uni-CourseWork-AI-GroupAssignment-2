@@ -24,10 +24,10 @@ def next_move(game: Game_IJK)-> None:
        current_player: int -> player who will make the next move either 1('+') or -1('-')
     '''
 
-    print('Please enter move for player %s (U, D, L, R, or S): ' % game.getCurrentPlayer())
+    print('Please enter move for player %s (U, D, L, R): ' % game.getCurrentPlayer())
     move = input().strip().upper()
-    while(move not in "UDLRS"):
-        print('Bad move! Please try again and enter move for player %s (U, D, L, R, or S): ' % turn)
+    while(move not in "UDLR"):
+        print('Bad move! Please try again and enter move for player %s (U, D, L, R): ' % turn)
         move = input().strip()
 
     yield move

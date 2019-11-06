@@ -33,6 +33,6 @@ def next_move(game: Game_IJK)-> None:
     # You'll want to put in your fancy AI code here. For right now this just 
     # returns a random move.
 
-    yield random.choice(['U', 'D', 'L', 'R', 'S'])
+    yield random.choice(['U', 'D', 'L', 'R'])
 
 

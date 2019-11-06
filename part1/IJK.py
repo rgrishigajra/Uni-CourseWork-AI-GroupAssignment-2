@@ -3,6 +3,8 @@
 """
 @author: Abhilash Kuhikar, October 2019
 
+THIS IS VERSION v2.0, updated 11/1/2019.
+
 ./ijk.py : Interface to an IJK game.
 
 Usage:
@@ -25,8 +27,8 @@ import human_IJK
 
 from logic_IJK import Game_IJK, initialGame
 
-def IJK(player1, player2, deterministic, timeout=120000, max_moves=1000):
-    game = initialGame(4, '+', deterministic)
+def IJK(player1, player2, deterministic, timeout=60, max_moves=30000):
+    game = initialGame(6, '+', deterministic)
 
     game.printGame()
 
@@ -70,8 +72,9 @@ def IJK(player1, player2, deterministic, timeout=120000, max_moves=1000):
             game = game.makeMove(move)
             
             game.printGame()
-    return moves
 
+    print('Winner was: ', game.state())
+    return moves
 
 if __name__ == "__main__":
     if(len(sys.argv) != 4):
