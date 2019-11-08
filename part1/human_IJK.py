@@ -18,7 +18,7 @@ from logic_IJK import Game_IJK
 
 def next_move(game: Game_IJK)-> None:
     ''' game: current-state of game
-        yield a single character as one of the following moves - 'U', 'L', 'R', 'D', 'S'
+        yield a single character as one of the following moves - 'U', 'L', 'R', 'D'
     '''
     '''board: list of list of chars -> current state of the game
        current_player: int -> player who will make the next move either 1('+') or -1('-')

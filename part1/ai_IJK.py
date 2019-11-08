@@ -29,10 +29,12 @@ def next_move(game: Game_IJK)-> None:
     board = game.getGame()
     player = game.getCurrentPlayer()
     deterministic = game.getDeterministic()
-
+    test=[]
     # You'll want to put in your fancy AI code here. For right now this just 
     # returns a random move.
-
+    for i in ['U', 'D', 'L', 'R']:
+        print("what if it was:"+str(i))
+        print(game.makeMove(i).printGame())
     yield random.choice(['U', 'D', 'L', 'R'])
 
 
