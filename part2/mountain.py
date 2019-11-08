@@ -51,16 +51,47 @@ imageio.imwrite('edges.jpg', uint8(255 * edge_strength / (amax(edge_strength))))
 # just create a horizontal centered line.
 
 
-ridge_bayes = argmax(edge_strength,axis=0)
+ridge_bayes = argmax(edge_strength, axis=0)
 print(ridge_bayes)
 
-imageio.imwrite("output.jpg", draw_edge(input_image, ridge_bayes, (255, 0, 0), 5))
+imageio.imwrite("output.jpg", draw_edge(input_image, ridge_bayes, (255, 255, 0), 5))
 
+ridge_viterbi = argmax(edge_strength, axis=0)
+#print(type(ridge_viterbi))
 
+trans_probab = [0.4, 0.2, 0.075, 0.025]
+state_probab = zeros((141, 251))
+max_state = zeros((141,251))
+#print(max_state.shape)
+for row in range(0, 141):
+    state_probab[0][row] = edge_strength[0][row]
 
-ridge_viterbi = [edge_strength.shape[0] / 3] * edge_strength.shape[1]
-#imageio.imwrite("output.jpg", draw_edge(input_image, ridge_viterbi, (0, 255, 0), 5))
+for col in range(1, 251):
+    for row in range(0, 141):
+        max = 0
+        for j in range(-3, 4):
+            # print(i,j)
+            if ((row + j <= 140) & (row + j >= 0)):
+                if (max < state_probab[row + j][col - 1] * trans_probab[abs(j)]):
+                    max = state_probab[row + j][col - 1] * trans_probab[abs(j)]
+                    #print(row,col)
+                    max_state[row][col] = row + j
+                state_probab[row][col] = edge_strength[row][col]/10 * max
+    #print(argmax(state_probab), max_state)
+#for row in range(0,140):
+#print(argmax(state_probab[:,250]))
+#print((state_probab[25,250]))
+#print(state_probab[:,250])
+max=argmax(state_probab[:,250])
+for col in range(250,-1,-1):
+    #print(max)
+    ridge_viterbi[col]=int(max)
+    max=max_state[int(max)][col]
+print(ridge_viterbi)
+# for col in range(250,-1,-1):
+#     state_probab[][]
+imageio.imwrite("output.jpg", draw_edge(input_image, ridge_viterbi, (0, 255, 0), 5))
 
 
 ridge_human = [edge_strength.shape[0] / 4] * edge_strength.shape[1]
-#imageio.imwrite("output.jpg", draw_edge(input_image, ridge_human, (0, 0, 255), 5))
+# imageio.imwrite("output.jpg", draw_edge(input_image, ridge_human, (0, 0, 255), 5))
