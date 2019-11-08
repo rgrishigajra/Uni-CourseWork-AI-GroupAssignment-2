@@ -54,39 +54,37 @@ imageio.imwrite('edges.jpg', uint8(255 * edge_strength / (amax(edge_strength))))
 ridge_bayes = argmax(edge_strength, axis=0)
 print(ridge_bayes)
 
-imageio.imwrite("output.jpg", draw_edge(input_image, ridge_bayes, (255, 255, 0), 5))
+imageio.imwrite("output.jpg", draw_edge(input_image, ridge_bayes, (255, 0, 0), 5))
 
 ridge_viterbi = argmax(edge_strength, axis=0)
 #print(type(ridge_viterbi))
 
-trans_probab = [0.4, 0.2, 0.075, 0.025]
-state_probab = zeros((141, 251))
-max_state = zeros((141,251))
+trans_probab = [0.6,0.2,0.2]
+state_probab = zeros((edge_strength.shape[0], edge_strength.shape[1]))
+max_state = zeros((edge_strength.shape[0],edge_strength.shape[1]))
 #print(max_state.shape)
-for row in range(0, 141):
-    state_probab[0][row] = edge_strength[0][row]
-
-for col in range(1, 251):
-    for row in range(0, 141):
-        max = 0
-        for j in range(-3, 4):
+for row in range(0, edge_strength.shape[0]):
+    state_probab[0][row] = 1/edge_strength.shape[0]
+for col in range(1, edge_strength.shape[1]):
+    for row in range(0, edge_strength.shape[0]):
+        maxi = 0
+        for j in range(-1, 2):
             # print(i,j)
-            if ((row + j <= 140) & (row + j >= 0)):
-                if (max < state_probab[row + j][col - 1] * trans_probab[abs(j)]):
-                    max = state_probab[row + j][col - 1] * trans_probab[abs(j)]
+            if ((row + j < edge_strength.shape[0]) & (row + j >= 0)):
+                if (maxi< state_probab[row + j][col - 1] * (trans_probab[abs(j)])):
+                    maxi = (state_probab[row + j][col - 1]) * (trans_probab[abs(j)])
                     #print(row,col)
                     max_state[row][col] = row + j
-                state_probab[row][col] = edge_strength[row][col]/10 * max
+                state_probab[row][col] = (edge_strength[row][col]/10) * (maxi)
     #print(argmax(state_probab), max_state)
 #for row in range(0,140):
 #print(argmax(state_probab[:,250]))
 #print((state_probab[25,250]))
 #print(state_probab[:,250])
-max=argmax(state_probab[:,250])
-for col in range(250,-1,-1):
-    #print(max)
-    ridge_viterbi[col]=int(max)
-    max=max_state[int(max)][col]
+maxi=argmax(state_probab[:,edge_strength.shape[1]-1])
+for col in range(edge_strength.shape[1]-1,-1,-1):
+    ridge_viterbi[col]=int(maxi)
+    maxi=max_state[int(maxi)][col]
 print(ridge_viterbi)
 # for col in range(250,-1,-1):
 #     state_probab[][]
