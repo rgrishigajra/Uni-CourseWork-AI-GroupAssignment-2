@@ -59,16 +59,21 @@ imageio.imwrite("output.jpg", draw_edge(input_image, ridge_bayes, (255, 0, 0), 5
 ridge_viterbi = argmax(edge_strength, axis=0)
 #print(type(ridge_viterbi))
 
-trans_probab = [0.6,0.2,0.2]
+trans_probab = [0.5,0.2,0.1]
 state_probab = zeros((edge_strength.shape[0], edge_strength.shape[1]))
 max_state = zeros((edge_strength.shape[0],edge_strength.shape[1]))
 #print(max_state.shape)
+total_gradient=zeros(edge_strength.shape[1])
+print(edge_strength.shape[0])
+for col in range(0, edge_strength.shape[1]):
+    for row in range(0,edge_strength.shape[0]):
+        total_gradient[col]+=edge_strength[row][col]
 for row in range(0, edge_strength.shape[0]):
-    state_probab[0][row] = 1/edge_strength.shape[0]
+    state_probab[row][0] = edge_strength[row][col]/total_gradient[0]
 for col in range(1, edge_strength.shape[1]):
     for row in range(0, edge_strength.shape[0]):
         maxi = 0
-        for j in range(-1, 2):
+        for j in range(-2, 3):
             # print(i,j)
             if ((row + j < edge_strength.shape[0]) & (row + j >= 0)):
                 if (maxi< state_probab[row + j][col - 1] * (trans_probab[abs(j)])):
