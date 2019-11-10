@@ -60,7 +60,7 @@ imageio.imwrite("output.jpg", draw_edge(input_image, ridge_bayes, (255, 0, 0), 5
 ridge_viterbi = argmax(edge_strength, axis=0)
 #print(type(ridge_viterbi))
 total_gradient=zeros(edge_strength.shape[1])
-trans_probab = [0.5,0.25,0.05]
+trans_probab = [0.5,0.15,0.01]
 for col in range(0, edge_strength.shape[1]):
     for row in range(0,edge_strength.shape[0]):
         total_gradient[col]+=edge_strength[row][col]
@@ -97,7 +97,6 @@ imageio.imwrite("output.jpg", draw_edge(input_image, ridge_viterbi, (0, 255, 0),
 
 
 ridge_human = [edge_strength.shape[0] / 4] * edge_strength.shape[1]
-print(type(gt_row),type(gt_col))
 for row in range(0,edge_strength.shape[0]):
     state_probab[row][gt_col]=0
 state_probab[gt_row][gt_col]=1
@@ -121,5 +120,4 @@ maxi=argmax(state_probab[:,edge_strength.shape[1]-1])
 for col in range(edge_strength.shape[1]-1,-1,-1):
     ridge_human[col]=int(maxi)
     maxi=max_state[int(maxi)][col]
-print(ridge_human)
 imageio.imwrite("output.jpg", draw_edge(input_image, ridge_human, (0, 0, 255), 5))
