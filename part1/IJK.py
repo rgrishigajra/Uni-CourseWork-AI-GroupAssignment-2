@@ -54,22 +54,24 @@ def IJK(player1, player2, deterministic, timeout=60, max_moves=30000):
 
         start = time.time()
         move = None
-        for result in player2(copy.deepcopy(game)):
-            end = time.time()
-            if end-start > timeout:
+        if game.state() != 0:
+
+            for result in player2(copy.deepcopy(game)):
+                end = time.time()
+                if end-start > timeout:
+                    break
+                else:
+                    move = result
+            if not move:
+                print ('player - forfeits the game')
                 break
             else:
-                move = result
-        if not move:
-            print ('player - forfeits the game')
-            break
-        else:
-            print ("%s played: %s" % (game.getCurrentPlayer(), move))
-            
-            moves.append((game.getCurrentPlayer(), move))
-            game = game.makeMove(move)
-            
-            game.printGame()
+                print ("%s played: %s" % (game.getCurrentPlayer(), move))
+
+                moves.append((game.getCurrentPlayer(), move))
+                game = game.makeMove(move)
+
+                game.printGame()
 
     print('Winner was: ', game.state())
     return moves
