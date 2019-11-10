@@ -62,7 +62,6 @@ imageio.imwrite("output_simple.jpg", draw_edge(input_image, ridge_bayes, (0, 0, 
 
 ridge_viterbi = zeros(edge_strength.shape[1])
 total_gradient=zeros(edge_strength.shape[1])
-<<<<<<< HEAD
 #transition probability values
 #if the state is in same row = 0.5
 #if state is in a row above or below = 0.2545
@@ -70,9 +69,6 @@ total_gradient=zeros(edge_strength.shape[1])
 #for the rest, we assume transition probabilities to be zero and never calculate those transitions in viterbi
 trans_probab = [0.5,0.2545,0.005]
 #sums up the edge strength values per column
-=======
-trans_probab = [0.5,0.15,0.01]
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
 for col in range(0, edge_strength.shape[1]):
     for row in range(0,edge_strength.shape[0]):
         total_gradient[col]+=edge_strength[row][col]
@@ -108,11 +104,8 @@ imageio.imwrite("output_map.jpg", draw_edge(input_image, ridge_viterbi, (255, 0,
 
 #solution for part2.3 human input and viterbi
 ridge_human = [edge_strength.shape[0] / 4] * edge_strength.shape[1]
-<<<<<<< HEAD
 
 #assigning human input values in the state probabilities
-=======
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
 for row in range(0,edge_strength.shape[0]):
     state_probab[row][gt_col]=0
 state_probab[gt_row][gt_col]=1
@@ -144,9 +137,5 @@ maxi=argmax(state_probab[:,edge_strength.shape[1]-1])
 for col in range(edge_strength.shape[1]-1,-1,-1):
     ridge_human[col]=int(maxi)
     maxi=max_state[int(maxi)][col]
-<<<<<<< HEAD
 input_image = Image.open(input_filename)
 imageio.imwrite("output_human.jpg", draw_edge(input_image, ridge_human, (0, 255, 0), 5))
-=======
-imageio.imwrite("output.jpg", draw_edge(input_image, ridge_human, (0, 0, 255), 5))
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
