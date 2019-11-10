@@ -139,6 +139,7 @@ for col in range(gt_col+1, edge_strength.shape[1]):
                     max_state[row][col] = row + j
                 state_probab[row][col] = (edge_strength[row][col]/100) * (maxi)
 #backtracking to find solution in a similar way as viterbi
+
 maxi=argmax(state_probab[:,edge_strength.shape[1]-1])
 for col in range(edge_strength.shape[1]-1,-1,-1):
     ridge_human[col]=int(maxi)
