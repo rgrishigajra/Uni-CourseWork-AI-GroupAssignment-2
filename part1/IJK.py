@@ -51,7 +51,6 @@ def IJK(player1, player2, deterministic, timeout=60, max_moves=30000):
 
             moves.append((game.getCurrentPlayer(), move))
             game = game.makeMove(move)
-            
             game.printGame()
 
         start = time.time()
@@ -84,7 +83,11 @@ if __name__ == "__main__":
     
     logics = { "human" : human_IJK.next_move, "ai" : ai_IJK.next_move }
     deterministic = { "det" : True, "nondet" : False }
+    start = time.time()
+    moves=IJK(logics[p1], logics[p2], deterministic[mode])
+    end = time.time()
+    time=end-start
+    print(len(moves),time)
 
-    IJK(logics[p1], logics[p2], deterministic[mode])
 
 

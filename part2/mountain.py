@@ -11,6 +11,7 @@ from numpy import *
 from scipy.ndimage import filters
 import sys
 import imageio
+import numpy
 
 # calculate "Edge strength map" of an image
 #
@@ -34,6 +35,10 @@ def draw_edge(image, y_coordinates, color, thickness):
             image.putpixel((x, t), color)
     return image
 
+def bayes(edge):
+
+    return
+
 # main program
 #
 (input_filename, gt_row, gt_col) = sys.argv[1:]
@@ -49,5 +54,15 @@ imageio.imwrite('edges.jpg', uint8(255 * edge_strength / (amax(edge_strength))))
 # just create a horizontal centered line.
 ridge = [ edge_strength.shape[0]/2 ] * edge_strength.shape[1]
 
+
+ridge1=argmax(edge_strength,axis=0)
 # output answer
-imageio.imwrite("output.jpg", draw_edge(input_image, ridge, (255, 0, 0), 5))
+imageio.imwrite("output.jpg", draw_edge(input_image, ridge1, (255, 0, 0), 5))
+
+ridge2=argmax(edge_strength,axis=0)
+# output answer
+imageio.imwrite("output.jpg", draw_edge(input_image, ridge2, (0, 255, 0), 5))
+
+ridge3=argmax(edge_strength,axis=0)
+# output answer
+imageio.imwrite("output.jpg", draw_edge(input_image, ridge3, (0, 0, 255), 5))
