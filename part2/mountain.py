@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3
 #
-# Authors: [Milan Chheta(michheta), Rishab Gajra(rgajra), Jay Madhu(jaymadhu)]
+# Authors: [Milan Chheta(michheta), Rishabh Gajra(rgajra), Jay Madhu(jaymadhu)]
 #
 # Mountain ridge finder
 # Based on skeleton code by D. Crandall, Oct 2019
