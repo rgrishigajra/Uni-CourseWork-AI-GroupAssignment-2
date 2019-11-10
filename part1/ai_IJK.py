@@ -20,21 +20,6 @@ import numpy as np
 # This function should analyze the current state of the game and determine the 
 # best move for the current player. It should then call "yield" on that move.
 
-<<<<<<< HEAD
-transformplus = {'a': 2, 'b': 4, 'c': 8, 'd': 16, 'e': 32, 'f': 64, 'g': 128, 'h': 256, 'i': 512, 'j': 1024, 'k': 2048,
-             'A': 2, 'B': 4, 'C': 8, 'D': 16, 'E': 32, 'F': 64, 'G': 128, 'H': 256, 'I': 512, 'J': 1024, 'K': 2048}
-transformminus= {'a': 2, 'b': 4, 'c': 8, 'd': 16, 'e': 32, 'f': 64, 'g': 128, 'h': 256, 'i': 512, 'j': 1024, 'k': 2048,
-             'A': -2, 'B': -4, 'C': -8, 'D': -16, 'E': -32, 'F': -64, 'G': -128, 'H': -256, 'I': -512, 'J': -1024, 'K': -2048}
-
-# p=Game_IJK.getCurrentPlayer()
-# if p=='-':
-#     for key in transform:
-#         transform[key] = -1 * transform[key]
-#
-
-def convert(boardi,game):
-    #print(game.getCurrentPlayer())
-=======
 #dictionary to transform letters into corresponding numbers for '+' player
 transformplus = {'a': -2, 'b': -4, 'c': -8, 'd': -16, 'e': -32, 'f': -64, 'g': -128, 'h': -256, 'i': -512, 'j': -1024, 'k': -2048,
              'A': 2, 'B': 4, 'C': 8, 'D': 16, 'E': 32, 'F': 64, 'G': 128, 'H': 256, 'I': 512, 'J': 1024, 'K': 2048}
@@ -55,7 +40,6 @@ heuristic=[
 
 #function to convert current board with letters  to numbers
 def convert(boardi,game):
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
     for i in range(0, 6):
         for j in range(0, 6):
             if boardi[i][j] != ' ' and game.getCurrentPlayer()=='+':
