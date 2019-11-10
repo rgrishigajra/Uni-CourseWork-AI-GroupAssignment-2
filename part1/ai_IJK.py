@@ -61,86 +61,6 @@ def convert(boardi,game):
             if boardi[i][j] != ' ' and game.getCurrentPlayer()=='+':
                 boardi[i][j] = transformplus[boardi[i][j]]
             if boardi[i][j] != ' ' and game.getCurrentPlayer()=='-':
-<<<<<<< HEAD
-                boardi[i][j] = transformplus[boardi[i][j]]
-    #game.printGame()
-    return boardi
-
-# h=[
-#     [2048, 512, 64, 16, 4, 0],
-#     [512, 64, 16, 4, 0, -1],
-#     [64, 16, 4, 0, -1, -2],
-#     [16, 4, 0, -1, -2, -3],
-#     [4, 0, -1, -2, -3, -4],
-#     [0, -1, -2, -3, -4, -5],
-# ]
-h=[[1024,512,256,128,64,32],
-   [512,256,128,64,32,16],
-   [256,128,64,32,16,8],
-   [128,64,32,16,8,4],
-   [64,32,16,8,4,2],
-   [32,16,8,4,2,1]]
-ht=[[17179869184, 16777216, 8388608, 4096, 2048, 1],
-        [8589934592, 33554432, 4194304, 8192, 1024, 2],
-        [4294967296, 67108864, 2097152, 16384, 512, 4],
-        [2147483648, 536870912, 1048576, 32768, 256, 8],
-        [1073741824, 134217728, 524288, 65536, 128, 16],
-        [536870912, 268435456, 262144, 131072, 64, 32]]
-
-# d=[[1,2,3,4,5,6],
-#    [2,3,4,5,6,7],
-#    [3,4,5,6,7,8],
-#    [4,5,6,7,8,9],
-#    [5,6,7,8,9,10],
-#    [6,7,8,9,10,11]]
-#
-# def emptytiles(s):
-#     c=0
-#     for i in range(0, 6):
-#         for j in range(0, 6):
-#             if s[i][j] == ' ':
-#                 c+=1
-#     return c
-#
-# def penalty(s):
-#     pd = 0
-#     pr = 0
-#     for i in range(0, 5):
-#         for j in range(0, 5):
-#             if s[i][j] != ' ' and s[i + 1][j] != ' ':
-#                 pd = pd + abs(abs(s[i][j]) - abs(s[i + 1][j]))
-#     for i in range(0, 5):
-#         for j in range(0, 5):
-#             if s[i][j] != ' ' and s[i][j + 1] != ' ':
-#                 pr = pr + abs(abs(s[i][j]) - abs(s[i][j + 1]))
-#     return pr+pd
-
-def weight(s):
-    sum1=0
-    sum2=0
-    sum3=0
-    # for i in range(0, 6):
-    #     for j in range(0, 6):
-    #         if s[i][j] != ' ':
-    #             sum1 = sum1 + s[i][j] * h[i][j]
-    for i in range(0, 6):
-      for j in range(0, 6):
-          if s[i][j] != ' ':
-              sum1 = sum1 + s[i][j] * h[i][j]
-            #sum2 = sum2 + s[i][j] * ht[i][j]
-          else:
-              sum3+=2048
-    #monotonic
-    return (sum1+sum2+sum3)
-
-def utility(s,game):
-    s=convert(s,game)
-    # e=emptytiles(s)
-    # p=penalty(s)
-    w=weight(s)
-    # u=e-p+w
-    return w
-=======
                 boardi[i][j] = transformminus[boardi[i][j]]
     return boardi
 
@@ -180,27 +100,20 @@ def utility(currentState,game):
     currentState=convert(currentState,game)
     utilityValue=penalty(currentState)+weight(currentState)
     return utilityValue
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
 
 #function to generate successor
 def successor(game,i):
     game.makeMove(i)
     return game
 
-<<<<<<< HEAD
-=======
 #minimax algorithm used for game with alpha-beta pruning
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
 def minimax(game, depth, maxPlayer,alpha,beta):
 
     #terminal condition
     if depth == 0 or game.isGameFull():
         return utility(game.getGame(),game)
 
-<<<<<<< HEAD
-=======
     #when max player is playing
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
     elif maxPlayer == True:
         value = float('-inf')
         for i in ['U','L','R','D']:
@@ -244,10 +157,7 @@ def next_move(game: Game_IJK)-> None:
     for i in ['U', 'L', 'R', 'D']:
         child = successor(copy.deepcopy(game), i)
         value.append(minimax(child, 3, False,float('-inf'),float('inf')))
-<<<<<<< HEAD
-=======
     #get index number with highest value
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
     k = np.argmax(value)
     #choose a move with highest minimax utility value
     yield moves[k]
@@ -255,9 +165,3 @@ def next_move(game: Game_IJK)-> None:
     # You'll want to put in your fancy AI code here. For right now this just
     # returns a random move.
 
-<<<<<<< HEAD
-    yield moves[k]
-
-    # yield moves[k]
-=======
->>>>>>> 0f41c5cb4fa411578ce43963dd5451ddca685122
