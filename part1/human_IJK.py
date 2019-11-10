@@ -22,14 +22,13 @@ def next_move(game: Game_IJK)-> None:
     '''board: list of list of chars -> current state of the game
        current_player: int -> player who will make the next move either 1('+') or -1('-')
     '''
-    print('human')
-    yield random.choice(['U','L','R','D'])
-    # print('Please enter move for player %s (U, D, L, R): ' % game.getCurrentPlayer())
-    # move = input().strip().upper()
-    # while(move not in "UDLR"):
-    #     print('Bad move! Please try again and enter move for player %s (U, D, L, R): ' % move)
-    #     move = input().strip()
-    #
-    # yield move
+
+    print('Please enter move for player %s (U, D, L, R): ' % game.getCurrentPlayer())
+    move = input().strip().upper()
+    while(move not in "UDLR"):
+        print('Bad move! Please try again and enter move for player %s (U, D, L, R): ' % move)
+        move = input().strip()
+
+    yield move
 
 

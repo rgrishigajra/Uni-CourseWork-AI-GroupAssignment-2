@@ -149,8 +149,7 @@ def next_move(game: Game_IJK)-> None:
     # You'll want to put in your fancy AI code here. For right now this just
     # returns a random move.
 
-    print('ai1')
-        #choose a move with highest minimax utility value
+    #choose a move with highest minimax utility value
     yield moves[k]
 
         # yield moves[k]
