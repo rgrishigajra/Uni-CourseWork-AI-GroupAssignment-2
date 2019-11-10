@@ -49,22 +49,22 @@ def convert(boardi,game):
     return boardi
 
 
-#function to calculate penalty based on neighboring elements(right and down)
-def penalty(currentState):
-    penaltyDown = 0
-    penaltyRight = 0
-    #calculate penalties with right neighbour
-    for i in range(0, 5):
-        for j in range(0, 5):
-            if currentState[i][j] != ' ' and currentState[i + 1][j] != ' ':
-                penaltyDown = penaltyDown + abs(abs(currentState[i][j]) - abs(currentState[i + 1][j]))
-    #calculate penalties with bottom element
-    for i in range(0, 5):
-        for j in range(0, 5):
-            if currentState[i][j] != ' ' and currentState[i][j + 1] != ' ':
-                penaltyRight = penaltyRight + abs(abs(currentState[i][j]) - abs(currentState[i][j + 1]))
-    return (penaltyRight+penaltyDown)
-
+# #function to calculate penalty based on neighboring elements(right and down)
+# def penalty(currentState):
+#     penaltyDown = 0
+#     penaltyRight = 0
+#     #calculate penalties with right neighbour
+#     for i in range(0, 5):
+#         for j in range(0, 5):
+#             if currentState[i][j] != ' ' and currentState[i + 1][j] != ' ':
+#                 penaltyDown = penaltyDown + abs(abs(currentState[i][j]) - abs(currentState[i + 1][j]))
+#     #calculate penalties with bottom element
+#     for i in range(0, 5):
+#         for j in range(0, 5):
+#             if currentState[i][j] != ' ' and currentState[i][j + 1] != ' ':
+#                 penaltyRight = penaltyRight + abs(abs(currentState[i][j]) - abs(currentState[i][j + 1]))
+#     return (penaltyRight+penaltyDown)
+#
 
 #function to calculate weight values and empty tiles
 def weight(currentState):
@@ -75,7 +75,7 @@ def weight(currentState):
           if currentState[i][j] != ' ':
             weightValue+=currentState[i][j] * weightMatrix[i][j]
           else:
-              emptyTiles+=64
+              emptyTiles+=2048**4
     return (weightValue+emptyTiles)
 
 
@@ -83,7 +83,7 @@ def weight(currentState):
 #function to calculate utility value
 def utility(currentState,game):
     currentState=convert(currentState,game)
-    utilityValue=weight(currentState) + penalty(currentState)
+    utilityValue=weight(currentState)
     return utilityValue
 
 #function to generate successor
