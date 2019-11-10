@@ -51,25 +51,36 @@ imageio.imwrite('edges.jpg', uint8(255 * edge_strength / (amax(edge_strength))))
 # You'll need to add code here to figure out the results! For now,
 # just create a horizontal centered line.
 
+# answer for 2.1, finds maximum edge strength per column and returns an array.
+# we dont need to divide with the total edge strength value here since its a comparison
+# so denominator can be ignored for all terms
 
 ridge_bayes = argmax(edge_strength, axis=0)
-print(ridge_bayes)
+imageio.imwrite("output_simple.jpg", draw_edge(input_image, ridge_bayes, (0, 0, 255), 5))
 
-imageio.imwrite("output.jpg", draw_edge(input_image, ridge_bayes, (255, 0, 0), 5))
+#answer for part 2.2, does viterbi implmentation with bottom up and memoization
 
-ridge_viterbi = argmax(edge_strength, axis=0)
-#print(type(ridge_viterbi))
+ridge_viterbi = zeros(edge_strength.shape[1])
 total_gradient=zeros(edge_strength.shape[1])
-trans_probab = [0.5,0.25,0.05]
+#transition probability values
+#if the state is in same row = 0.5
+#if state is in a row above or below = 0.2545
+#is state is in two rows above or below = 0.005
+#for the rest, we assume transition probabilities to be zero and never calculate those transitions in viterbi
+trans_probab = [0.5,0.2545,0.005]
+#sums up the edge strength values per column
 for col in range(0, edge_strength.shape[1]):
     for row in range(0,edge_strength.shape[0]):
         total_gradient[col]+=edge_strength[row][col]
+#final array
 state_probab = zeros((edge_strength.shape[0], edge_strength.shape[1]))
+#array to store previous state for back tracking
 max_state = zeros((edge_strength.shape[0],edge_strength.shape[1]))
-#print(max_state.shape)
-print(edge_strength.shape[0])
+#calculating initial starting state probabilities
 for row in range(0, edge_strength.shape[0]):
     state_probab[row][0] = edge_strength[row][col]/total_gradient[0]
+
+#calculating state probabilities of each node using viterbi
 for col in range(1, edge_strength.shape[1]):
     for row in range(0, edge_strength.shape[0]):
         maxi = 0
@@ -81,45 +92,49 @@ for col in range(1, edge_strength.shape[1]):
                     #print(row,col)
                     max_state[row][col] = row + j
                 state_probab[row][col] = (edge_strength[row][col]/100) * (maxi)
-    #print(argmax(state_probab), max_state)
-#for row in range(0,140):
-#print(argmax(state_probab[:,250]))
-#print((state_probab[25,250]))
-#print(state_probab[:,250])
+
+#finding the node with maximum probability in final column
 maxi=argmax(state_probab[:,edge_strength.shape[1]-1])
+#backtracking to solution based on memory storage of previous max product stored in viterbi
 for col in range(edge_strength.shape[1]-1,-1,-1):
     ridge_viterbi[col]=int(maxi)
     maxi=max_state[int(maxi)][col]
-print(ridge_viterbi)
-# for col in range(250,-1,-1):
-#     state_probab[][]
-imageio.imwrite("output.jpg", draw_edge(input_image, ridge_viterbi, (0, 255, 0), 5))
+input_image = Image.open(input_filename)
+imageio.imwrite("output_map.jpg", draw_edge(input_image, ridge_viterbi, (255, 0, 0), 5))
 
-
+#solution for part2.3 human input and viterbi
 ridge_human = [edge_strength.shape[0] / 4] * edge_strength.shape[1]
-print(type(gt_row),type(gt_col))
+
+#assigning human input values in the state probabilities
 for row in range(0,edge_strength.shape[0]):
     state_probab[row][gt_col]=0
 state_probab[gt_row][gt_col]=1
+
+#propagating the change from human input backwards (previous columns)
+for col in range(gt_col-1, 0, -1):
+    for row in range(gt_row-1, 0, -1):
+        maxi = 0
+        for j in range(-2, 3):
+            if ((row + j < edge_strength.shape[0]) & (row + j >= 0)):
+                if (maxi< state_probab[row + j][col + 1] * (trans_probab[abs(j)])):
+                    maxi = (state_probab[row + j][col + 1]) * (trans_probab[abs(j)])
+                    max_state[row][col] = row + j
+                state_probab[row][col] = (edge_strength[row][col]/100) * (maxi)
+
+#propagating the change from human input forwards (columns ahead)
 for col in range(gt_col+1, edge_strength.shape[1]):
     for row in range(gt_row+1, edge_strength.shape[0]):
         maxi = 0
         for j in range(-2, 3):
-            # print(i,j)
             if ((row + j < edge_strength.shape[0]) & (row + j >= 0)):
                 if (maxi< state_probab[row + j][col - 1] * (trans_probab[abs(j)])):
                     maxi = (state_probab[row + j][col - 1]) * (trans_probab[abs(j)])
-                    #print(row,col)
                     max_state[row][col] = row + j
                 state_probab[row][col] = (edge_strength[row][col]/100) * (maxi)
-    #print(argmax(state_probab), max_state)
-#for row in range(0,140):
-#print(argmax(state_probab[:,250]))
-#print((state_probab[25,250]))
-#print(state_probab[:,250])
+#backtracking to find solution in a similar way as viterbi
 maxi=argmax(state_probab[:,edge_strength.shape[1]-1])
 for col in range(edge_strength.shape[1]-1,-1,-1):
     ridge_human[col]=int(maxi)
     maxi=max_state[int(maxi)][col]
-print(ridge_human)
-imageio.imwrite("output.jpg", draw_edge(input_image, ridge_human, (0, 0, 255), 5))
+input_image = Image.open(input_filename)
+imageio.imwrite("output_human.jpg", draw_edge(input_image, ridge_human, (0, 255, 0), 5))

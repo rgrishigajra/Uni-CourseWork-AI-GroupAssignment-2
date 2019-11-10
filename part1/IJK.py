@@ -31,12 +31,11 @@ def IJK(player1, player2, deterministic, timeout=60, max_moves=30000):
     game = initialGame(6, '+', deterministic)
 
     game.printGame()
-
+    test=0
     moves = []
     while not game.state() != 0 and len(moves) < max_moves:
         start = time.time()
         move = None
-        
         for result in player1(copy.deepcopy(game)):
             end = time.time()
             if end-start > timeout:
@@ -71,7 +70,6 @@ def IJK(player1, player2, deterministic, timeout=60, max_moves=30000):
             game = game.makeMove(move)
             
             game.printGame()
-
 
     print('Winner was: ', game.state())
     return moves
