@@ -72,6 +72,7 @@ def IJK(player1, player2, deterministic, timeout=60, max_moves=30000):
             
             game.printGame()
 
+
     print('Winner was: ', game.state())
     return moves
 

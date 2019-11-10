@@ -16,7 +16,7 @@ logic code inspired from https://github.com/yangshun/2048-python
 '''
 Game API Documentation:
 game.makeMove(move)->Game_IJK:
-    Input argument move: one of 'U', 'L', 'R', 'D', 'S'
+    Input argument move: one of 'U', 'L', 'R', 'D'
     Returns deepcopy of the game object after the 'move' is applied
 
 game.printGame()->None:
@@ -24,7 +24,7 @@ game.printGame()->None:
     
 game.getGame()->List[List[int]]:
     Returns current game board as list of list of int
-    
+
 game.getCurrentPlayer()->int:
     Returns '+', if currentPlayer is uppercase
     Returns '-', if currentPlayer is lowercase
