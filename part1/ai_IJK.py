@@ -3,7 +3,7 @@
 """
 This is where you should write your AI code!
 
-Authors: PLEASE ENTER YOUR NAMES AND USER ID'S HERE
+Authors: [Milan Chheta(michheta), Rishab Gajra(rgajra), Jay Madhu(jaymadhu)]
 
 Based on skeleton code by Abhilash Kuhikar, October 2019
 """
