@@ -30,3 +30,5 @@ def next_move(game: Game_IJK)-> None:
         move = input().strip()
 
     yield move
+
+

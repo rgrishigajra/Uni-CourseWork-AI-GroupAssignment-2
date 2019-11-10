@@ -28,8 +28,8 @@ transformplus = {'a': -2, 'b': -4, 'c': -8, 'd': -16, 'e': -32, 'f': -64, 'g': -
 transformminus= {'a': 2, 'b': 4, 'c': 8, 'd': 16, 'e': 32, 'f': 64, 'g': 128, 'h': 256, 'i': 512, 'j': 1024, 'k': 2048,
              'A': -2, 'B': -4, 'C': -8, 'D': -16, 'E': -32, 'F': -64, 'G': -128, 'H': -256, 'I': -512, 'J': -1024, 'K': -2048}
 
-#heuristic (weight) matrix used for calculating utility value
-heuristic=[
+#weight matrix used for calculating utility value
+weightMatrix=[
     [2048, 1024, 512, 256, 128, 64],
     [1024, 512, 256, 128, 64, 32],
     [512, 256, 128, 64, 32, 16],
@@ -73,16 +73,17 @@ def weight(currentState):
     for i in range(0, 6):
       for j in range(0, 6):
           if currentState[i][j] != ' ':
-            weightValue+=currentState[i][j] * heuristic[i][j]
+            weightValue+=currentState[i][j] * weightMatrix[i][j]
           else:
-              emptyTiles+=1
+              emptyTiles+=64
     return (weightValue+emptyTiles)
+
 
 
 #function to calculate utility value
 def utility(currentState,game):
     currentState=convert(currentState,game)
-    utilityValue=penalty(currentState)+weight(currentState)
+    utilityValue=weight(currentState) + penalty(currentState)
     return utilityValue
 
 #function to generate successor
@@ -137,15 +138,19 @@ def next_move(game: Game_IJK)-> None:
 
     moves=['U', 'L', 'R', 'D']
     value=[]
+
     #start with minimax algorithm with current game state
     for i in ['U', 'L', 'R', 'D']:
         child = successor(copy.deepcopy(game), i)
         value.append(minimax(child, 3, False,float('-inf'),float('inf')))
     #get index number with highest value
     k = np.argmax(value)
-    #choose a move with highest minimax utility value
-    yield moves[k]
 
     # You'll want to put in your fancy AI code here. For right now this just
     # returns a random move.
 
+    print('ai1')
+        #choose a move with highest minimax utility value
+    yield moves[k]
+
+        # yield moves[k]

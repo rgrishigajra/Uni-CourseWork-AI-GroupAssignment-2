@@ -54,18 +54,18 @@ def IJK(player1, player2, deterministic, timeout=60, max_moves=30000):
 
         start = time.time()
         move = None
-        if game.state() != 0:
 
-            for result in player2(copy.deepcopy(game)):
+
+        for result in player2(copy.deepcopy(game)):
                 end = time.time()
                 if end-start > timeout:
                     break
                 else:
                     move = result
-            if not move:
+        if not move:
                 print ('player - forfeits the game')
                 break
-            else:
+        else:
                 print ("%s played: %s" % (game.getCurrentPlayer(), move))
 
                 moves.append((game.getCurrentPlayer(), move))
@@ -81,7 +81,6 @@ if __name__ == "__main__":
         raise Exception('Please provide three commandline arguments.')
     
     (p1, p2, mode) = sys.argv[1:]
-    
     logics = { "human" : human_IJK.next_move, "ai" : ai_IJK.next_move }
     deterministic = { "det" : True, "nondet" : False }
     start = time.time()
