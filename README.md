@@ -53,29 +53,36 @@ Functions used in the code:
 **next\_move():** Given function where the AI code is implemented and the decision regarding next move is made.
 
 **Heuristics:**
+
 Perhaps the majority of our time went out it is trying different heuristics, formulating them, researching them online and testing how the affected our AI algorithm with the latter part being quite tough. We considered the following heuristics:
 
 1) **The snake-shaped heuristic**
+
 [Referenced from: [http://cs229.stanford.edu/proj2016/report/NieHouAn-AIPlays2048-report.pdf](http://cs229.stanford.edu/proj2016/report/NieHouAn-AIPlays2048-report.pdf)
 AI Plays 2048: _by Yun Nie (yunn), Wenqi Hou (wenqihou), Yicheng An (yicheng)]_
 
 This heuristic seemed like a very good choice since it focused on getting larger values at one edge of the board which seems intuitive. But when we implemented the same with the powers of 2 the output was not promising. Our AI lost to the random AI half the times in 10 trials.
 
 2) **The gradient heuristic**
+
 Learning a bit from the above heuristic we tried converting the weighted matrix from above to a gradient matrix where a randomly picked corner would have the highest value and it gradually decreased to the opposite corner. We let the starting corner be of weight 2048 and it got halved on every both way with an opposite corner being 2. This gave us good results.
 
 3) **The number of empty tiles**
+
 [Referenced from: [https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048](https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048) answered by Petr Morávek (@xificurk)]
 
 We thought of adding the number of tiles empty as a reward or giving a penalty for each tile being occupied. After trials, we ended up with rewarding the heuristic with a fixed value in the power of 2048 for every empty tile. We added a big weight here so as to push the algorithm towards merging as many tiles as possible.
 
 4) **Monotonicity:**
+
 Same reference as above.
 
 We looked into making our matrix monotonic since this promoted the merging of tiles or increasing the likelihood of it. We weren&#39;t able to reach a conclusion of how this would factor in a two-player game since our Ai should not be helping the opponent. We didn&#39;t try to implement this heuristic.
 
 5) **Adjacent tiles:**
+
 We tried creating a penalty function that would try to push the algorithm to make the board a bit monotonic not entirely. The penalty function in our code (later we commented it out) tried to give a higher penalty for the bigger difference in sizes of adjacent tiles. So, if the tiles that are the same value are side by side this function gave no penalty, then for each step difference it gave more penalty. It was not so effective so ee didn&#39;t include it in our final algorithm.
 
 **Final**
+
 While testing we found that a combination of two heuristics worked well together: The number of empty tiles and Gradient weights. We could find a scale of both that was compatible and gave us 13 wins out of 15 vs the random Ai.
