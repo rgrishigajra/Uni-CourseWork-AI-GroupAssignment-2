@@ -83,6 +83,6 @@ We looked into making our matrix monotonic since this promoted the merging of ti
 
 We tried creating a penalty function that would try to push the algorithm to make the board a bit monotonic not entirely. The penalty function in our code (later we commented it out) tried to give a higher penalty for the bigger difference in sizes of adjacent tiles. So, if the tiles that are the same value are side by side this function gave no penalty, then for each step difference it gave more penalty. It was not so effective so ee didn&#39;t include it in our final algorithm.
 
-**Final**
+**Final:**
 
 While testing we found that a combination of two heuristics worked well together: The number of empty tiles and Gradient weights. We could find a scale of both that was compatible and gave us 13 wins out of 15 vs the random Ai.
