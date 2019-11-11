@@ -113,6 +113,6 @@ One of the main design decisions we had to make was to decide the transition pro
 
 ![Image added](./part2/output_map.jpg)
 
-#### Adding Human Feedback of (row=76, col=127) to Viterbi:
+#### Adding Human Feedback of (row=48, col=142) to Viterbi:
 
 ![Image added](./part2/output_human.jpg)
