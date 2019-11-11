@@ -50,7 +50,11 @@ Functions used in the code:
 
 **miminmax():** Function that implements minimax algorithm with alpha-beta pruning for current state of the game.
 
-**next\_move():** Given function where the AI code is implemented and the decision regarding next move is made. Thus no new wieght matrix is needed for non deterministic mode.
+
+**next\_move():** Given function where the AI code is implemented and the decision regarding next move is made.
+
+For both deterministic and non deterministic mode, same weight matrix is used. As the new tile is added before player takes its turns, the chances for winning with the new state is checked with all the possible moves.Thus no new wieght matrix is needed for non deterministic mode.
+
 
 **Heuristics:**
 
