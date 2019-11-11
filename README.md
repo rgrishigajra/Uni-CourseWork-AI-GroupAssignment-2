@@ -1,4 +1,4 @@
-**PART 1:**
+## **PART 1: IJK**
 
 IJK is a sliding tile game played on a 6x6 board by two players (either human or ai). First player is denoted by &#39;+&#39; and second player is denoted by &#39;-&#39;. To make the AI smart, **minimax algorithm with alpha-beta pruning** is implemented with a depth of 3.
 
@@ -88,5 +88,16 @@ We tried creating a penalty function that would try to push the algorithm to mak
 While testing we found that a combination of two heuristics worked well together: The number of empty tiles and Gradient weights. We could find a scale of both that was compatible and gave us 13 wins out of 15 vs the random Ai.
 
 
+## **PART 2: Horizon Finding**
+
+#### A description of how you formulated each problem:
+
+This problem has 3 sub parts to work on. The initial code given, loads the image, calculates the edge strength map and draws a straight line in the middle of the image. Based on the formula and the explanation given in the instruction, the first part of the problem was solved using the <i>argmax</i> function of NumPy which gets the maximum edge strength from each column and returns a row. While this was a simple and a one liner solution, the results were pretty bad. Thus, we move on to the next part of the problem where we are suggested to use Hidden Markov Model and use Viterbi algorithm to solve the Maximum a Posterior estimate. For Viterbi we require 3 elements: state probabilities, transition probabilities and emission probabilities. Now mountains are not straight, so it is important to detect whether the ridge is moving upwards or downwards. What we’ve done is that while traversing through the columns, we take 5 pixels of the next column (one in the same row, and 2 above and below this pixel) and check for the state which has the maximum probability. Transition probabilities are assigned logically based based on these 5 pixels.We expect the ridge to mostly go forward or a pixel above or below as we go from column to column . The one beside the current state gets the highest probability, the states one above and below this state are assigned a lower probability and the states two above and below the state are assigned the least probabilities. Implementing this logic with Viterbi algorithm did produced results better than the previous part however, but only for the images in which the horizon was clear. Hence, to solve this issue we move to the third part of the problem where we give human input in the form of coordinates, i.e. a point on the ridge. As the instruction suggested that we do not change the implementation of the algorithm, we can just feed the input in our implementation. What we’ve done for this part is that once we get the human input, we get the maximum states from each column in both directions from the given column. This implementation provided the best results in detecting the horizon.
+
+#### A brief description of how your program works:
+
+
+
+#### Discussion of any problems you faced, any assumptions, simplifications, and/or design decisions you made:
 
 ![Image added](./part2/output.jpg)
