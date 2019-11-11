@@ -35,7 +35,7 @@ weightMatrix=[
     [512, 256, 128, 64, 32, 16],
     [256, 128, 64, 32, 16, 8],
     [128, 64, 32, 16, 8, 4],
-    [64, 32, 16, 8, 4, 2],
+    [64, 32, 16, 8, 4, 2]
 ]
 
 #function to convert current board with letters  to numbers

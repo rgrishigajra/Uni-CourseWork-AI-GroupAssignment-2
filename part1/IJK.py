@@ -83,11 +83,8 @@ if __name__ == "__main__":
     (p1, p2, mode) = sys.argv[1:]
     logics = { "human" : human_IJK.next_move, "ai" : ai_IJK.next_move }
     deterministic = { "det" : True, "nondet" : False }
-    start = time.time()
     moves=IJK(logics[p1], logics[p2], deterministic[mode])
-    end = time.time()
-    time=end-start
-    print(len(moves),time)
+
 
 
 
