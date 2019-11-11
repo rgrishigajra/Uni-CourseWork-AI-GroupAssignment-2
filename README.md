@@ -69,7 +69,7 @@ Learning a bit from the above heuristic we tried converting the weighted matrix 
 
 3) **The number of empty tiles**
 
-[Referenced from: [https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048](https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048)_answered by Petr Morávek (@xificurk)]_
+[Referenced from: [https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048](https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048) answered by Petr Morávek (@xificurk)]_
 
 We thought of adding the number of tiles empty as a reward or giving a penalty for each tile being occupied. After trials, we ended up with rewarding the heuristic with a fixed value in the power of 2048 for every empty tile. We added a big weight here so as to push the algorithm towards merging as many tiles as possible.
 
