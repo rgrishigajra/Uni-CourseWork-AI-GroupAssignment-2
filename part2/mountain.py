@@ -116,7 +116,7 @@ state_probab[gt_row][gt_col]=1
 
 #propagating the change from human input backwards (previous columns)
 for col in range(gt_col-1, 0, -1):
-    for row in range(gt_row-1, 0, -1):
+    for row in range(len_row-1, -1, -1):
         maxi = 0
         for j in range(-2, 3):
             if ((row + j < len_row) & (row + j >= 0)):
@@ -127,7 +127,7 @@ for col in range(gt_col-1, 0, -1):
 
 #propagating the change from human input forwards (columns ahead)
 for col in range(gt_col+1, len_col):
-    for row in range(gt_row+1, len_row):
+    for row in range(0, len_row):
         maxi = 0
         for j in range(-2, 3):
             if ((row + j < len_row) & (row + j >= 0)):

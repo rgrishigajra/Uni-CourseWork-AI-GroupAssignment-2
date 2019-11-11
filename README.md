@@ -50,7 +50,7 @@ Functions used in the code:
 
 **miminmax():** Function that implements minimax algorithm with alpha-beta pruning for current state of the game.
 
-**next\_move():** Given function where the AI code is implemented and the decision regarding next move is made.
+**next\_move():** Given function where the AI code is implemented and the decision regarding next move is made. Thus no new wieght matrix is needed for non deterministic mode.
 
 **Heuristics:**
 
