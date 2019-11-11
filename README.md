@@ -86,3 +86,7 @@ We tried creating a penalty function that would try to push the algorithm to mak
 **Final:**
 
 While testing we found that a combination of two heuristics worked well together: The number of empty tiles and Gradient weights. We could find a scale of both that was compatible and gave us 13 wins out of 15 vs the random Ai.
+
+
+
+![Image added](./part2/output.jpg)
