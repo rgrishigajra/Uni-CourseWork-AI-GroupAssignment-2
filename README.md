@@ -104,8 +104,15 @@ As the problem is divided in 3 parts our implementation of the code has also 3 p
 
 One of the main design decisions we had to make was to decide the transition probabilities as the instructions mentioned that there are no right answers for that. Hence, we logically decided that when going from column to other the ridge will only move a pixel above, below(probability 0.2545) or stay in the same row with the highest chance it stays of 0.5. We gave a minute chance for the ridge to skip a pixel and jump to two rows above or below the current row when going from column to column(0.005). We assumed that the transition probabilities from far away states is 0 since ridge jumping should not happen. After handling the transition probabilities we needed starting probabilities of each row, which we assumed to be the edge strength for that pixel divided by the total edge strength of the column as to main the sum or entire column as 1. We tried a couple of possible solutions here as giving equal starting probabilities to each pixel in the column (1/number of rows) or just the edge strength but found this works the best. We assumed emission probabilities as the edge strength values for each pixel. We did not divide it with total edge strength of the column this time since all we needed the values were for comparing and the denominator could be ignored since it would be constant among all the probabilities that would be compared. This avoided the underflow error we would have gotten if we divided it with a huge number. To avoid the overflow error now we divided the emission probabilities with 100. In the Human input, we initially tried only moving the effect forwards since it was intuitive but when we moved the effect backward too, the ridge was much more accurate. 
 
+### The final outputs:
+#### Using Bayes Net:
+
 ![Image added](./part2/output_simple.jpg)
 
+#### Using Viterbi:
+
 ![Image added](./part2/output_map.jpg)
+
+#### Adding Human Feedback of (row=76, col=127) to Viterbi:
 
 ![Image added](./part2/output_human.jpg)
